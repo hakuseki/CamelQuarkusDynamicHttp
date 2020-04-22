@@ -1,0 +1,42 @@
+quarkus:
+  datasource:
+    #    db-kind: postgresql
+    driver: org.postgresql.Driver
+    username: postgres
+    password: TradeseC
+    jdbc:
+      min-size: 4
+      max-size: 16
+    url: jdbc:postgresql://localhost:5432/firds_database?ApplicationName=FIRDSDownloader
+    reactive: false
+  flyway:
+    migrate-at-start: true
+    baseline-on-migrate: true
+  log:
+    category:
+      "se.tradechannel":
+        level: debug
+      "org.apache.camel":
+        level: debug
+  camel:
+    service:
+      discovery:
+        include-patterns: META-INF/services/org/apache/camel/send-dynamic/https
+
+
+
+# tag::esma[]
+esma:
+  download:
+    url: registers.esma.europa.eu/solr/esma_registers_firds_files/select?q=*&fq=publication_date:%5B${date:now-72h:yyyy-MM-dd}T00:00:00Z%20TO%20${date:now-24h:yyyy-MM-dd}T23:59:59Z%5D&wt=xml&indent=false&start=0&rows=100&allowOptimisedComponents=false
+    startup: true
+    timer: FIRDSDownloader
+  full:
+    startup: true
+    path: FIRDS/input/full
+  delta:
+    startup: true
+    path: FIRDS/input/delta
+    idempotent: FIRDS/fileidempotent/filestore.dat
+# end::esma[]
+
