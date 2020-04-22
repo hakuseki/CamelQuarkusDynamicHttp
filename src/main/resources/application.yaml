@@ -1,17 +1,4 @@
 quarkus:
-  datasource:
-    #    db-kind: postgresql
-    driver: org.postgresql.Driver
-    username: postgres
-    password: TradeseC
-    jdbc:
-      min-size: 4
-      max-size: 16
-    url: jdbc:postgresql://localhost:5432/firds_database?ApplicationName=FIRDSDownloader
-    reactive: false
-  flyway:
-    migrate-at-start: true
-    baseline-on-migrate: true
   log:
     category:
       "se.tradechannel":
