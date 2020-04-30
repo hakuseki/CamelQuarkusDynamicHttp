@@ -61,9 +61,9 @@ public class DownloadESMA extends EndpointRouteBuilder {
 
         //tag::esma.download.timer[]
         from(timer("FIRDSDownloader").repeatCount(1))
-                .routeId("FIRDS Download")
-                .autoStartup("{{esma.download.startup}}")
-                .setHeader("CamelHttpMethod", constant("GET"))
+//                .routeId("FIRDS Download")
+//                .autoStartup("{{esma.download.startup}}")
+.setHeader("CamelHttpMethod", constant("GET"))
                 .toD("https:registers.esma.europa.eu/solr/esma_registers_firds_files/select?q=*&fq=publication_date" +
                              ":%5B${date:now-72h:yyyy-MM-dd}T00:00:00Z%20TO%20${date:now-24h:yyyy-MM-dd}T23:59:59Z%5D&wt=xml&indent=false&start=0&rows=100")
                 .log("${body}")
